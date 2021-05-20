@@ -116,7 +116,7 @@ function click_circle_zoom(up_down) {
 
   list = qc.panel_chart.widgets;
   for (var i = 0; i < list.length; ++i) {
-    var widget = list[i];
+    
     list[i].mouseWheel(e);
   }
 }
@@ -194,8 +194,6 @@ function load_code_from_url(file_url) {
     http_request.onload = function () {
       if (http_request.readyState === http_request.DONE) {
         if (http_request.status === 200) {
-          // console.log(http_request.response);
-          // console.log(http_request.responseText);
           editor.focus();
           editor.setValue(http_request.responseText);
           editor.gotoLine(0);
@@ -238,12 +236,8 @@ qc_options.staff_div = document.getElementById('staff_popin_div');
 qc_options.circle_canvas = document.getElementById('circle_canvas');
 qc_options.circle_div = document.getElementById('circle_div');
 var valid_engine_list = [];
-//qc_options.draw_scale = 3.0;
 var qc = QPU();
 qc.set_param('draw_scale', 1.0);
-// qc.set_canvas(document.getElementById('draw_gate_canvas'));
-// panel_staff = qc.panel_staff;
-// panel_chart = qc.panel_chart;
 
 var current_sample = null;
 var current_engine = engine_list[0];
@@ -392,8 +386,6 @@ function do_contact_modal() {
 }
 
 function do_cheatsheet_modal() {
-  // var options = null;
-  // var val = $('#CheatSheet_runModal').modal(options);
   window.open('./docs/build/index.html', '_blank');
 }
 
@@ -402,8 +394,6 @@ function make_github_source_links() {
   if (sample == null)
     return;
   valid_engine_list = [0];
-  // str = '<br/>';
-  // str += 'View source in Github: ';
   str = 'Source code on Github <div class="btn-group btn-group-sm float-right" role="group" aria-label="Other simulators">'
   for (i = 0; i < engine_list.length; ++i) {
     engine = engine_list[i];
@@ -422,8 +412,6 @@ function make_github_source_links() {
     else {
       var link = 'https://github.com/oreilly-qc/oreilly-qc.github.io/tree/master/samples/' + engine.name;
       str += '<a href="' + link + '" class="btn btn-secondary disabled">' + engine.link_name + '</a>';
-      // str += '<span style="color:#aaa" title="This version is not implemented yet, but if you\'d like to add it, please contact us at octopus@qcengine.com">';
-      // str += '<b><a href="'+link+'" target="_blank">'+engine.link_name+'</a></b></span>';
     }
   }
 
@@ -468,7 +456,6 @@ function make_github_source_links() {
       wb_link = current_engine.subdir + '/Chapter7-samples.ipynb';
     }
     if (wb_text) {
-      //            str += '<br/>';
       str += wb_text;
       str += '<b>';
       str += '<a href="' + wb_link + '" download>' + wb_name + '</a>';
@@ -490,9 +477,7 @@ function make_github_source_links() {
     str += ', or download <b><a href="https://github.com/oreilly-qc/oreilly-qc.github.io/tree/master/samples/QSharp" target="_blank">here</a></b> to run locally.';
   }
 
-  // str += '<span style="font-size:8pt; color:#77a">';
-  // str += '<br/>Developers: Add your engine, or add a sample! <b><a href="#" onclick="do_addengine_modal();">Click here</a></b> for more info.';
-  // str += '</span>';
+  // str += '
 
   example_github_span.innerHTML = str;
 }
@@ -614,7 +599,6 @@ function load_code_sample(sample_str, engine) {
     qce = engine;
   var raw_qce_code_url = qce.subdir + sample.sample_file + qce.suffix;
 
-  var github_links_str = '';
 
   ok = load_code_from_url(raw_qce_code_url);
   if (!ok) {
@@ -626,20 +610,7 @@ function load_code_sample(sample_str, engine) {
   return ok;
 }
 
-// function test_cc(canvas, color)
-// {
-//     canvas.width = 200;
-//     canvas.height = 200;
 
-//     console.log(canvas);
-//     var ctx = canvas.getContext('2d');
-//     ctx.save();
-//     {
-//         ctx.fillStyle = color;
-//         ctx.fillRect(0, 0, canvas.width, canvas.height);
-//     }
-//     ctx.restore();
-// }
 
 function show_bug(enable, err) {
   var span = document.getElementById('bug_span');
@@ -669,8 +640,7 @@ function run_script() {
   qc_options.circle_scale = 0.5;
   qc.start();
   if (qc) {
-    //      qc.disableAnimation();
-    //      qc.enableRecording();
+    //      qc.disableAnimation
     qc.codeLabel('');
   }
   show_graphics_output(false);
@@ -701,8 +671,6 @@ function clear_output(show_default_message = true) {
 }
 
 function rewind_to_beginning() {
-  // if (current_language != 'javascript')
-  //   return;
   console.log('instructions: ' + qc.qReg.staff.insertionStart);
   qc.qReg.staff.rewind_insertion_to_start();
 }
@@ -711,7 +679,6 @@ function show_state_vector() {
   list = qc.panel_chart.widgets;
   for (var i = 0; i < list.length; ++i) {
     if (list[i].stateVector) {
-      // console.log(list[i]);
       list[i].collapsed = false;
       list[i].barHeight = 0;
     }
@@ -729,8 +696,6 @@ function set_progress(percent, message) {
   var progress_panel = document.getElementById('progress_panel');
   var progress_bar = document.getElementById('progress_bar');
   progress_panel.style.display = 'block';
-  // console.log(progress_bar);
-  //    progress_bar['aria-valuenow'] = percent;
   percent = Math.round(percent);
   progress_bar.style.width = '' + percent + '%';
   progress_bar.setAttribute('aria-valuenow', percent);
@@ -745,7 +710,6 @@ function handle_run_button() {
     do_engine_modal(current_engine.name);
     return;
   }
-  // set_progress(50, '');
   if (UiSettings.AutoClear) {
     clear_output();
 
