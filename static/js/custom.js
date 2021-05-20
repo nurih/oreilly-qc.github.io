@@ -731,7 +731,7 @@ window.onload = function () {
 };
 
 // Auto-clear output on run support
-const UiSettings = { AutoClear: false };
+const UiSettings = { AutoClear: false, UsePrintln: true };
 
 function toggleAutoclear() {
   UiSettings.AutoClear = !UiSettings.AutoClear;
@@ -745,5 +745,20 @@ editor_div.addEventListener('keydown', (keyDownEvent) => {
   }
 });
 
-// Patch QCEngine to add println()
-qc.println = function (text) { qc.print(text + '\n'); }
+// Support println(), patch old functionality to turn print() into println()
+function togglePrintln() {
+  UiSettings.UsePrintln = !UiSettings.UsePrintln
+}
+
+qc.oldPrint = qc.print;
+qc.println = function (text) { qc.oldPrint(text + '\n'); }
+qc.print = function (text) {
+  if (UiSettings.UsePrintln) {
+    console.log('println: ' + text)
+    qc.println(text)
+  }
+  else {
+    console.log('print inline: ' + text)
+    qc.oldPrint(text);
+  }
+}

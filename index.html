@@ -318,8 +318,16 @@
             <button type="button" class="btn btn-small btn-outline-dark" onclick="clear_output(false);" title="Clear output">
               <i class="fa fa-eraser"></i>
             </button>
-            <input type="checkbox" onchange="toggleAutoclear();">
-            <b>Clear automatically</b>
+            <div class="btn-group">
+
+              <input type="checkbox" onchange="toggleAutoclear();">
+              <b>Clear automatically</b>
+
+              <input type="checkbox" checked onchange="togglePrintln();">
+              <b>Println</b>
+
+            </div>
+
 
           </div>
         </div>
