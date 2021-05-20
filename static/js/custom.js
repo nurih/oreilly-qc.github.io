@@ -116,7 +116,7 @@ function click_circle_zoom(up_down) {
 
   list = qc.panel_chart.widgets;
   for (var i = 0; i < list.length; ++i) {
-    
+
     list[i].mouseWheel(e);
   }
 }
@@ -729,8 +729,21 @@ window.onload = function () {
   fetch_sample_contents();
   make_sample_menu();
 };
+
+// Auto-clear output on run support
 const UiSettings = { AutoClear: false };
 
 function toggleAutoclear() {
   UiSettings.AutoClear = !UiSettings.AutoClear;
 }
+
+// Keyboard binding support
+editor_div.addEventListener('keydown', (keyDownEvent) => {
+  if (!keyDownEvent.repeat && keyDownEvent.key === 'F5') {
+    keyDownEvent.preventDefault();
+    handle_run_button();
+  }
+});
+
+// Patch QCEngine to add println()
+qc.println = function (text) { qc.print(text + '\n'); }
